@@ -1,0 +1,8 @@
+/home/alvarodelcampo/2Informatica/ED/Practicas/PracticaFinal/submission/PracticaFinal/CMakeFiles/quienesquien.dir
+/home/alvarodelcampo/2Informatica/ED/Practicas/PracticaFinal/submission/PracticaFinal/CMakeFiles/doc_doxygen.dir
+/home/alvarodelcampo/2Informatica/ED/Practicas/PracticaFinal/submission/PracticaFinal/CMakeFiles/mrproper.dir
+/home/alvarodelcampo/2Informatica/ED/Practicas/PracticaFinal/submission/PracticaFinal/CMakeFiles/zip.dir
+/home/alvarodelcampo/2Informatica/ED/Practicas/PracticaFinal/submission/PracticaFinal/CMakeFiles/edit_cache.dir
+/home/alvarodelcampo/2Informatica/ED/Practicas/PracticaFinal/submission/PracticaFinal/CMakeFiles/rebuild_cache.dir
+/home/alvarodelcampo/2Informatica/ED/Practicas/PracticaFinal/submission/PracticaFinal/CMakeFiles/quienesquien_autogen_timestamp_deps.dir
+/home/alvarodelcampo/2Informatica/ED/Practicas/PracticaFinal/submission/PracticaFinal/CMakeFiles/quienesquien_autogen.dir

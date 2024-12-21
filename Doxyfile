@@ -1,0 +1,6 @@
+PROJECT_NAME           = "QuienesQuien"
+OUTPUT_DIRECTORY       = /home/alvarodelcampo/2Informatica/ED/Practicas/PracticaFinal/submission/PracticaFinal/doc_doxygen/
+INPUT                  = /home/alvarodelcampo/2Informatica/ED/Practicas/PracticaFinal/submission/PracticaFinal/.//include /home/alvarodelcampo/2Informatica/ED/Practicas/PracticaFinal/submission/PracticaFinal/.//src /home/alvarodelcampo/2Informatica/ED/Practicas/PracticaFinal/submission/PracticaFinal/.//doc
+GENERATE_LATEX         = NO
+IMAGE_PATH             = /home/alvarodelcampo/2Informatica/ED/Practicas/PracticaFinal/submission/PracticaFinal/.//doc
+EXTRACT_PRIVATE        = NO
