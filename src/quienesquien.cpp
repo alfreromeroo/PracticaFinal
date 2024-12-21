@@ -276,6 +276,8 @@ bintree<Pregunta> QuienEsQuien::crear_arbol( vector<string> atributos,
      return arbol;
 }
 
+
+
 bintree<Pregunta> QuienEsQuien::crear_arbol(){
      int indice_atributo = 0;
      vector<bool> personajes_restantes;
@@ -302,8 +304,8 @@ void QuienEsQuien::iniciar_juego(){
      
      while (!jugada_actual.null() && (!jugada_actual.left().null() || !jugada_actual.right().null())){
 
-          con ->WriteText("¿Tu personaje tiene el atributo: ");
-          con ->WriteText(jugada_actual.operator*().obtener_pregunta());
+          con->WriteText("¿Tu personaje tiene el atributo: ");
+          con->WriteText(jugada_actual.operator*().obtener_pregunta());
           con->WriteText("? (s/n): ");
 
           char respuesta;
@@ -389,6 +391,7 @@ void QuienEsQuien::eliminar_nodos_redundantes(){
 
 float QuienEsQuien::profundidad_promedio_hojas(){
 
+     //Funcion auxiliar, basada en las diapositivas de teoria
      auto calcular_profundidad = [](const bintree<Pregunta>& arbol, const bintree<Pregunta>::node& nodo){
           int prof=0;
           auto aux = nodo;
