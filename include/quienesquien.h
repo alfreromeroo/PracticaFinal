@@ -200,7 +200,7 @@ public:
 
 
 	//Funcion auxiliar para el metodo eliminar_nodos_redundantes
-	void QuienEsQuien::eliminar_nodos_recursivo(bintree<Pregunta>:: node n);
+	void eliminar_nodos_recursivo(bintree<Pregunta>:: node n);
 
 
 	/**

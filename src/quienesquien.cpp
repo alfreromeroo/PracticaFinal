@@ -418,9 +418,9 @@ void QuienEsQuien::eliminar_nodos_recursivo(bintree<Pregunta>:: node n){
           eliminar_nodos_recursivo(n.right());
      }
 
-     if (!n.left().null() && n.right.null()){
-          bintree<Pregunta>::node arbol_izq = n.left();
-          arbol.prune_left(n,arbol);
+     if (!n.left().null() && n.right().null()){
+          bintree<Pregunta> arbol_izq;
+          arbol.prune_left(n,arbol_izq);
           bintree<Pregunta>::node padre = n.parent(); 
 
           if (!padre.null()){
@@ -434,9 +434,9 @@ void QuienEsQuien::eliminar_nodos_recursivo(bintree<Pregunta>:: node n){
           }
      }
 
-     if (n.left().null() && !n.right.null()){
-          bintree<Pregunta>::node arbol_der = n.right();
-          arbol.prune_right(n,arbol);
+     if (n.left().null() && !n.right().null()){
+          bintree<Pregunta> arbol_der;
+          arbol.prune_right(n,arbol_der);
           bintree<Pregunta>::node padre = n.parent(); 
 
           if (!padre.null()){
@@ -560,7 +560,7 @@ void QuienEsQuien::setModoGraph(bool m){
 }
 
 //Metodos adicionales
-void QuienEsQuien::aniade_personaje (string nombre, vector <bool> caracteristicas, string nombre_imagen_personaje=""){
+/*void QuienEsQuien::aniade_personaje (string nombre, vector <bool> caracteristicas, string nombre_imagen_personaje=""){
      bintree<Pregunta>::node n = arbol.root();
 
      if (n.null()){
@@ -582,3 +582,4 @@ void QuienEsQuien::aniade_personaje (string nombre, vector <bool> caracteristica
 
      }
 }
+*/
