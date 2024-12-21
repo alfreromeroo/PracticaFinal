@@ -185,7 +185,7 @@ ostream& operator <<  (ostream& os, const QuienEsQuien &quienEsQuien){
 
      //Rellenamos con ceros y unos cada linea y al final ponemos el nombre del personaje.
      for(int indice_personaje=0;indice_personaje<quienEsQuien.personajes.size();indice_personaje++){
-          for(int indice_atributo=0;indice_atributo<quienEsQuien.personajes.size();indice_atributo++){
+          for(int indice_atributo=0;indice_atributo<quienEsQuien.atributos.size();indice_atributo++){
                os << quienEsQuien.tablero[indice_personaje][indice_atributo] <<  "\t";
           }
           os << quienEsQuien.personajes[indice_personaje] << endl;
@@ -342,7 +342,7 @@ void QuienEsQuien::iniciar_juego(){
 set<string> QuienEsQuien::informacion_jugada(bintree<Pregunta>::node jugada_actual){
      set<string> personajes_levantados;
      if (jugada_actual.null()){
-          return personajes_levantados
+          return personajes_levantados;
      }
 
      if (jugada_actual.left().null() && jugada_actual.right().null()){
@@ -388,12 +388,36 @@ void QuienEsQuien::eliminar_nodos_redundantes(){
 }
 
 float QuienEsQuien::profundidad_promedio_hojas(){
-//TODO :)
-     int calcular_profundidad(const bintree<Pregunta> &arbol, const bintree<Pregunta>::node& nodo){
+
+     auto calcular_profundidad = [](const bintree<Pregunta>& arbol, const bintree<Pregunta>::node& nodo){
           int prof=0;
+          auto aux = nodo;
+          while (aux != arbol.root()){
+               prof++;
+               aux = aux.parent();
+          }
+          return prof;
+     };
+
+     vector <int> profundidades;
+
+     for(auto it = arbol.begin_preorder(); it != arbol.end_preorder(); ++it){
+          
+          if (it.left().null() && it.right().null()){
+               profundidades.push_back(calcular_profundidad(arbol, *it));
+          }
      }
 
-     return -1;
+     if (profundidades.empty()){
+          return -1.0f;
+     }
+
+     float suma = 0.0f;
+     for (size_t i=0; i<profundidades.size(); ++i){
+          suma += profundidades[i];
+     }
+
+     return suma / profundidades.size();
 }
 
 /**
