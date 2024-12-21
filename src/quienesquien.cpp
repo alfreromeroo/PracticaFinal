@@ -406,36 +406,94 @@ void QuienEsQuien::escribir_arbol_completo() const{
      escribir_esquema_arbol(cout,this->arbol,this->arbol.root(),pre);
 }
 
+void QuienEsQuien::eliminar_nodos_recursivo(bintree<Pregunta>::node n){
+
+     //si es una hoja no se hace nada
+     if (n.left().null() && n.right().null()){
+
+          return;
+     }
+
+     // eliminacion recursiva
+     if(!n.left().null() && !n.right().null()){
+          
+          eliminar_nodos_recursivo(n.left());
+          eliminar_nodos_recursivo(n.right());
+     }
+
+     if(!n.left().null() && n.right().null()){
+
+          bintree<Pregunta> arbol_izq;
+          arbol.prune_left(n, arbol_izq);
+
+          bintree<Pregunta>::node padre = n.parent();
+
+          if (!padre.null()){
+
+               if(padre.left() == n){
+
+                    arbol.insert_left(padre, arbol_izq);
+                    eliminar_nodos_recursivo(padre.left());
+
+               }else{
+
+                    arbol.insert_right(padre, arbol_izq);
+                    eliminar_nodos_recursivo(padre.right());
+               }
+          }
+     }
+
+     if(n.left().null() && !n.right().null()){
+
+          bintree<Pregunta> arbol_der;
+          arbol.prune_right(n, arbol_der);
+
+          bintree<Pregunta>::node padre = n.parent();
+
+          if (!padre.null()){
+
+               if(padre.left() == n){
+
+                    arbol.insert_left(padre, arbol_der);
+                    eliminar_nodos_recursivo(padre.left());
+
+               }else{
+
+                    arbol.insert_right(padre, arbol_der);
+                    eliminar_nodos_recursivo(padre.right());
+               }
+          }
+     }
+}
+
+
+
 void QuienEsQuien::eliminar_nodos_redundantes(){
-// TODO :)
+
+     if(!arbol.empty()){
+
+          eliminar_nodos_recursivo(arbol.root());
+     }
+     
 }
 
 float QuienEsQuien::profundidad_promedio_hojas(){
 
+     if (arbol.empty() || arbol.root().null()){
+
+          return {};
+
+     }
+
      vector <int> profundidades;
 
-     for(auto it = arbol.begin_preorder(); it != arbol.end_preorder(); ++it){
-          
-          if (it.left().null() && it.right().null()){
-
-               //calculamos la profundiad, como aprendido en teoria.
-
-               int prof=0;
-               auto aux = nodo;
-               while (aux != arbol.root()){
-                    prof++;
-                    aux = aux.parent();
-               }
-
-               profundidades.push_back(prof);
-          }
-     }
+     
 
      if (profundidades.empty()){
-          return -1.0f;
+          return -1;
      }
 
-     float suma = 0.0f;
+     float suma = 0;
      for (size_t i=0; i<profundidades.size(); ++i){
           suma += profundidades[i];
      }
@@ -505,3 +563,35 @@ void QuienEsQuien::setModoGraph(bool m){
     modo_graph=m;
 }
 
+/*void QuienEsQuien::aniade_personaje (string nombre, vector<bool> caracteristica,
+                                    string nombre_imagen_personaje= ""){
+
+     bintree<Pregunta>::node n = arbol.root();
+
+     //si esta vacio, creamos un arbol con la pregunta
+     if (n.null()){
+
+          arbol = bintree<Pregunta>(Pregunta(nombre, 1));
+          return;          
+     }
+
+     if(n.left().null() && n.right().null() && n.operator*().es_personaje()){
+
+          string personaje_existe = n.operator*().obtener_personaje();
+
+          int atributo_distintivo = -1;
+          for(size_t i = 0; i < atributos.size(); i++ ){
+
+               if[atributos[i] != tablero[atributo_distintivo][i]]{
+
+                    atributo_distintivo = i;
+                    break;
+               }
+          }
+     }
+
+     
+
+
+
+}*/

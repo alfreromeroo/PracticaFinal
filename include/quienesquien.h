@@ -198,6 +198,12 @@ public:
 	  */
 	void escribir_arbol_completo() const;
 
+	/*
+	 * Funcion auxiliar para el metodo eliminar_nodos_redundantes
+	 */
+
+	void eliminar_nodos_recursivo(bintree<Pregunta>::node n);
+
 	/**
 	  * @brief M�todo que modifica el �rbol de preguntas para que haya
 	  *        preguntas redundantes.

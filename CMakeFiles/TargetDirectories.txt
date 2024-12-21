@@ -1,0 +1,7 @@
+/home/alfredo/Documentos/ED/Practicas/practica_final/estudiante/CMakeFiles/quienesquien.dir
+/home/alfredo/Documentos/ED/Practicas/practica_final/estudiante/CMakeFiles/doc_doxygen.dir
+/home/alfredo/Documentos/ED/Practicas/practica_final/estudiante/CMakeFiles/mrproper.dir
+/home/alfredo/Documentos/ED/Practicas/practica_final/estudiante/CMakeFiles/zip.dir
+/home/alfredo/Documentos/ED/Practicas/practica_final/estudiante/CMakeFiles/edit_cache.dir
+/home/alfredo/Documentos/ED/Practicas/practica_final/estudiante/CMakeFiles/rebuild_cache.dir
+/home/alfredo/Documentos/ED/Practicas/practica_final/estudiante/CMakeFiles/quienesquien_autogen.dir

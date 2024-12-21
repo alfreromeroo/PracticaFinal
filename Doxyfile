@@ -1,0 +1,6 @@
+PROJECT_NAME           = "QuienesQuien"
+OUTPUT_DIRECTORY       = /home/alfredo/Documentos/ED/Practicas/practica_final/estudiante/doc_doxygen/
+INPUT                  = /home/alfredo/Documentos/ED/Practicas/practica_final/estudiante/.//include /home/alfredo/Documentos/ED/Practicas/practica_final/estudiante/.//src /home/alfredo/Documentos/ED/Practicas/practica_final/estudiante/.//doc
+GENERATE_LATEX         = NO
+IMAGE_PATH             = /home/alfredo/Documentos/ED/Practicas/practica_final/estudiante/.//doc
+EXTRACT_PRIVATE        = NO
