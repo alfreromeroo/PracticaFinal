@@ -459,43 +459,38 @@ void QuienEsQuien::eliminar_nodos_redundantes(){
           eliminar_nodos_recursivo(arbol.root());
      }
 }
+void QuienEsQuien::calcular_profundidad_aux(bintree<Pregunta>::node nodo, int profundidad, vector<int>& profundidades_ref) {
+    if (nodo.null()) return;
+
+    if (nodo.left().null() && nodo.right().null()) {
+        profundidades_ref.push_back(profundidad);
+    } else {
+        
+        calcular_profundidad_aux(nodo.left(), profundidad + 1, profundidades_ref);
+        calcular_profundidad_aux(nodo.right(), profundidad + 1, profundidades_ref);
+    }
+}
 
 float QuienEsQuien::profundidad_promedio_hojas(){
 
-     vector <int> profundidades;
+     vector<int> profundidades;
 
-     if (arbol.empty() || arbol.root().null()){
-          return {};
-     }
+    if (!arbol.empty()) {
+        calcular_profundidad_aux(arbol.root(), 0, profundidades);
+    }
 
-     for(auto it = arbol.begin_preorder(); it != arbol.end_preorder(); ++it){
-          
-          if (it.left().null() && it.right().null()){
+    if (profundidades.empty()) {
+        return -1; // No hay hojas
+    }
 
-               //calculamos la profundidad, como lo aprendido en teoria.
+    float suma = 0;
+    for (int profundidad : profundidades) {
+        suma += profundidad;
+    }
 
-               int prof=0;
-               auto aux = it;
-               while (aux != arbol.root()){
-                    prof++;
-                    aux = aux.parent();
-               }
-
-               profundidades.push_back(prof);
-          }
-     }
-
-     if (profundidades.empty()){
-          return -1;
-     }
-
-     float suma = 0;
-     for (size_t i=0; i<profundidades.size(); ++i){
-          suma += profundidades[i];
-     }
-
-     return suma / profundidades.size();
+    return suma / profundidades.size();
 }
+
 
 /**
 * @brief Genera numero enteros positivos aleatorios en el rango [min,max].
@@ -583,3 +578,4 @@ void QuienEsQuien::setModoGraph(bool m){
      }
 }
 */
+

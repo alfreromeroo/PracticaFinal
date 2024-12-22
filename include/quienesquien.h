@@ -274,6 +274,7 @@ public:
      */
     void ocultar_personajes_graph(const set<string> &personajes_activos);
 
+	void calcular_profundidad_aux(bintree<Pregunta>::node nodo, int profundidad, vector<int>& profundidades_ref);
 
 };
 #endif
