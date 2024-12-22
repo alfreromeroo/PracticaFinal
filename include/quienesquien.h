@@ -276,5 +276,7 @@ public:
 
 	void calcular_profundidad_aux(bintree<Pregunta>::node nodo, int profundidad, vector<int>& profundidades_ref);
 
+	string preguntas_formuladas ( bintree<Pregunta>::node jugada );
+
 };
 #endif
