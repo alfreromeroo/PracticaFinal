@@ -459,36 +459,46 @@ void QuienEsQuien::eliminar_nodos_redundantes(){
           eliminar_nodos_recursivo(arbol.root());
      }
 }
-void QuienEsQuien::calcular_profundidad_aux(bintree<Pregunta>::node nodo, int profundidad, vector<int>& profundidades_ref) {
-    if (nodo.null()) return;
 
-    if (nodo.left().null() && nodo.right().null()) {
-        profundidades_ref.push_back(profundidad);
-    } else {
-        
-        calcular_profundidad_aux(nodo.left(), profundidad + 1, profundidades_ref);
-        calcular_profundidad_aux(nodo.right(), profundidad + 1, profundidades_ref);
-    }
+void QuienEsQuien::calcular_profundidad_aux(bintree<Pregunta>::node nodo, int profundidad, vector<int>& profundidades) {
+     if (nodo.null()){
+          return;
+     } 
+
+     if (nodo.left().null() && nodo.right().null()) {
+          profundidades.push_back(profundidad);
+
+     } else {
+          
+          calcular_profundidad_aux(nodo.left(), profundidad + 1, profundidades_ref);
+          calcular_profundidad_aux(nodo.right(), profundidad + 1, profundidades_ref);
+     }
 }
 
 float QuienEsQuien::profundidad_promedio_hojas(){
 
+     if (arbol.empty() || arbol.root().null()){
+
+          return {};
+
+     }
+
      vector<int> profundidades;
 
-    if (!arbol.empty()) {
-        calcular_profundidad_aux(arbol.root(), 0, profundidades);
-    }
+     if (!arbol.empty()) {
+          calcular_profundidad_aux(arbol.root(), 0, profundidades);
+     }
 
-    if (profundidades.empty()) {
-        return -1; // No hay hojas
-    }
+     if (profundidades.empty()) {
+          return -1;
+     }
 
-    float suma = 0;
-    for (int profundidad : profundidades) {
-        suma += profundidad;
-    }
+     float suma = 0;
+     for (size_t i=0; i<profundidades.size();  ++i) {
+          suma += profundidades[i];
+     }
 
-    return suma / profundidades.size();
+     return suma / profundidades.size();
 }
 
 
