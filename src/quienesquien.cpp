@@ -477,6 +477,25 @@ void QuienEsQuien::eliminar_nodos_redundantes(){
      
 }
 
+void QuienEsQuien::calcular_profundidad_aux(bintree<Pregunta>::node nodo,
+                                             int profundidad, 
+                                             vector<int>& profundidades){
+
+     if (nodo.null()){
+          return;
+     }
+
+     if (nodo.left().null() && nodo.right().null()) {
+
+          profundidades.push_back(profundidad);
+
+     }else {
+        
+          calcular_profundidad_aux(nodo.left(), profundidad + 1, profundidades);
+          calcular_profundidad_aux(nodo.right(), profundidad + 1, profundidades);
+     }
+}
+
 float QuienEsQuien::profundidad_promedio_hojas(){
 
      if (arbol.empty() || arbol.root().null()){
@@ -487,7 +506,10 @@ float QuienEsQuien::profundidad_promedio_hojas(){
 
      vector <int> profundidades;
 
-     
+     if (!arbol.empty()){
+
+          calcular_profundidad_aux(arbol.root(), 0, profundidades);
+     }
 
      if (profundidades.empty()){
           return -1;
