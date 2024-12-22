@@ -261,19 +261,20 @@ bintree<Pregunta> QuienEsQuien::crear_arbol( vector<string> atributos,
           }
      }
 
-     bintree<Pregunta> arbol_si;
-     bintree<Pregunta> arbol_no;
+     
+     if (indice_atributo + 1 < atributos.size()) {
+          if (contador_si > 0) {
+               bintree<Pregunta> arbol_si = crear_arbol(atributos, indice_atributo + 1, 
+                                             personajes, personajes_si, tablero);
 
-     if (indice_atributo + 1 <atributos.size()){
-          if (contador_si > 0){
-               arbol_si = crear_arbol(atributos, indice_atributo + 1, personajes, personajes_si, tablero);
                arbol.insert_left(arbol.root(), arbol_si);
           }
-          if (contador_no > 0){
-               arbol_no = crear_arbol(atributos, indice_atributo + 1, personajes, personajes_no, tablero);
+          if (contador_no > 0) {
+               bintree<Pregunta> arbol_no = crear_arbol(atributos, indice_atributo + 1, 
+                                             personajes, personajes_no, tablero);
+
                arbol.insert_right(arbol.root(), arbol_no);
           }
-                 
      }
      
      return arbol;
@@ -288,8 +289,98 @@ bintree<Pregunta> QuienEsQuien::crear_arbol_mejorado( vector<string> atributos,
                                              vector<bool> personajes_restantes,
                                              vector<vector<bool>> tablero){
 
-     //TODO :D:D
-     bintree<Pregunta> arbol;
+     int num_personajes_restantes = count(personajes_restantes.begin(), personajes_restantes.end(), true);
+     if (num_personajes_restantes == 1){
+          
+          int indice_personaje = distance(personajes_restantes.begin(), find(personajes_restantes.begin(), personajes_restantes.end(), true));
+          return bintree<Pregunta>(Pregunta(personajes[indice_personaje], num_personajes_restantes));
+     }
+
+     
+
+     // calcular entropia
+     
+     int pos_atributo = -1;
+     float max_entropia = -1;
+
+     for (size_t i = 0; i< atributos.size(); ++i){
+
+          float contador_si = 0;
+          float contador_no = 0;
+
+          for (size_t j= 0; j< personajes.size(); ++j){
+
+               if(personajes_restantes[j]){
+
+                    if(tablero[j][i]){
+
+                         ++contador_si;
+                    
+                    }else{
+
+                         ++contador_no;
+                    }
+               }
+          }
+
+          float entropia_si = contador_si/num_personajes_restantes;
+          float entropia_no = contador_no/num_personajes_restantes;
+          float entropia = 0;
+
+          //formula entropia del guion
+          if(entropia_si>0){
+
+               entropia-= entropia_si*log2(entropia_si);
+          }
+          if(entropia_no>0){
+
+               entropia -= entropia_no*log2(entropia_no);
+          }
+
+          //comparamos cual es la maxima entropia
+          if(entropia>max_entropia){
+
+               max_entropia =entropia;
+               pos_atributo = i;
+          }          
+     }
+     
+     // igual que en crear arbol
+
+     bintree<Pregunta> arbol(Pregunta(atributos[pos_atributo], num_personajes_restantes));
+
+     vector<bool> personajes_si(personajes.size(), false);
+     vector<bool> personajes_no(personajes.size(), false);
+     int contador_si = 0;
+     int contador_no = 0;
+
+     for(size_t i=0; i<personajes.size(); ++i){
+          if(personajes_restantes[i]){
+               if (tablero[i][pos_atributo]){
+                    personajes_si[i] = true;
+                    ++contador_si;
+               }else{
+                    personajes_no[i] = true;
+                    ++contador_no;
+               }
+          }
+     }
+
+     bintree<Pregunta> arbol_si;
+     bintree<Pregunta> arbol_no;
+
+     if (pos_atributo + 1 <atributos.size()){
+          if (contador_si > 0){
+               arbol_si = crear_arbol(atributos, pos_atributo + 1, personajes, personajes_si, tablero);
+               arbol.insert_left(arbol.root(), arbol_si);
+          }
+          if (contador_no > 0){
+               arbol_no = crear_arbol(atributos, pos_atributo + 1, personajes, personajes_no, tablero);
+               arbol.insert_right(arbol.root(), arbol_no);
+          }
+                 
+     }
+     
      return arbol;
 }
 
@@ -324,29 +415,43 @@ void QuienEsQuien::iniciar_juego(){
      
      while (!jugada_actual.null() && (!jugada_actual.left().null() || !jugada_actual.right().null())){
 
-          con ->WriteText("¿Tu personaje tiene el atributo: ");
-          con ->WriteText(jugada_actual.operator*().obtener_pregunta());
-          con->WriteText("? (s/n): ");
+          cout << "¿Tu personaje tiene el atributo: ";
+          cout << jugada_actual.operator*().obtener_pregunta();
+          cout << "? (s/n): " << endl;
 
           char respuesta;
-          do{
-               respuesta = con ->ReadChar();
-          }while (respuesta != 's' && respuesta != 'n');
+          bool respuesta_valida = false;
 
+          while (!respuesta_valida) {
+               
+               cin >> respuesta;
+               
+               if (respuesta == 's' || respuesta == 'n') {
+                    
+                    respuesta_valida = true;  // Respuesta válida, salir del bucle
+               }else {
+
+                    cout << "Por favor, responde con 's' para sí o 'n' para no.\n" <<endl;
+               }
+          }     
+     
           if (respuesta == 's' && !jugada_actual.left().null()){
+                    
                jugada_actual = jugada_actual.left();
-          }else if (respuesta == 'n' && !jugada_actual.right().null()){
+
+          }else if( respuesta == 'n' && !jugada_actual.right().null()){
+
                jugada_actual = jugada_actual.right();
-          }
+          }                                   
      }
 
      if (!jugada_actual.null()){
-          con ->WriteText("Tu personaje es: ");
-          con ->WriteText(jugada_actual.operator*().obtener_personaje());
-          con ->WriteText("\n");
+          cout << "Tu personaje es: ";
+          cout << jugada_actual.operator*().obtener_personaje();
+          cout << "\n";
      }else{
-          con ->WriteText("No he podido adivinar tu personaje. \n");
-     }
+          cout << "No he podido adivinar tu personaje. \n";
+     }          
     
      if (modo_graph){
           con->WriteText("Cuando completes QuienEsQuien, este mensaje lo podr�s quitar");
@@ -359,17 +464,20 @@ void QuienEsQuien::iniciar_juego(){
           }while (c!='0');
           
      }
+
      v.cerrar();
 }	
 
 set<string> QuienEsQuien::informacion_jugada(bintree<Pregunta>::node jugada_actual){
+
      set<string> personajes_levantados;
+
      if (jugada_actual.null()){
           return personajes_levantados;
      }
 
      if (jugada_actual.left().null() && jugada_actual.right().null()){
-          const Pregunta& pregunta_actual = jugada_actual.operator*();
+          const Pregunta& pregunta_actual = *jugada_actual;
           if (pregunta_actual.obtener_num_personajes() == 1){
                personajes_levantados.insert(pregunta_actual.obtener_personaje());
           }
@@ -409,7 +517,7 @@ void QuienEsQuien::escribir_arbol_completo() const{
 void QuienEsQuien::eliminar_nodos_recursivo(bintree<Pregunta>::node n){
 
      //si es una hoja no se hace nada
-     if (n.left().null() && n.right().null()){
+     if (n.null() || (n.left().null() && n.right().null())){
 
           return;
      }
@@ -451,17 +559,10 @@ void QuienEsQuien::eliminar_nodos_recursivo(bintree<Pregunta>::node n){
           bintree<Pregunta>::node padre = n.parent();
 
           if (!padre.null()){
-
-               if(padre.left() == n){
-
-                    arbol.insert_left(padre, arbol_der);
-                    eliminar_nodos_recursivo(padre.left());
-
-               }else{
-
-                    arbol.insert_right(padre, arbol_der);
-                    eliminar_nodos_recursivo(padre.right());
-               }
+             
+               arbol.insert_right(padre, arbol_der);
+               eliminar_nodos_recursivo(padre.right());
+              
           }
      }
 }
@@ -583,6 +684,36 @@ void QuienEsQuien::setImagenOcultar(const char * n){
 
 void QuienEsQuien::setModoGraph(bool m){
     modo_graph=m;
+}
+
+void QuienEsQuien::setArbolMejorado(bool m){
+    arbol_mejorado=m;
+}
+
+//Metodos adicionales
+string QuienEsQuien::preguntas_formuladas(bintree<Pregunta>::node jugada) {
+
+     if (jugada.null()){
+          return "No se han formulado preguntas aun";
+     }
+
+     string pregunta_formulada = "El personaje oculto tiene las siguientes características: \n ";
+
+     bintree<Pregunta>::node nodo_actual = jugada;
+     while (nodo_actual != arbol.root()){
+          bintree<Pregunta>::node nodo_padre = nodo_actual.parent();
+
+          if (nodo_padre.left() == nodo_actual){
+               pregunta_formulada += "- " + nodo_padre.operator*().obtener_pregunta() + " - si\n";
+          }else if (nodo_padre.right() == nodo_actual) {
+               pregunta_formulada += "- " + nodo_padre.operator*().obtener_pregunta() + " -no\n";
+          }
+
+          nodo_actual = nodo_padre;
+     }
+
+     pregunta_formulada += "pero aun no se cual es";
+     return pregunta_formulada;
 }
 
 /*void QuienEsQuien::aniade_personaje (string nombre, vector<bool> caracteristica,

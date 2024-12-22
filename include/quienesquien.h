@@ -30,7 +30,7 @@ using namespace std;
  * Conjunto de personajes con sus atributos.
  */
 class QuienEsQuien{
-private:
+	private:
 	/**
 	  * @brief Almacena el nombre de los personajes. Su �ndice en
 	  *        este vector corresponde con el �ndice de su
@@ -116,7 +116,7 @@ private:
                                     vector<string> personajes,
                                     vector<bool> personajes_restantes,
                                     vector<vector<bool>> tablero);
-public:
+	public:
 	/**
 	  * @brief Constructor b�sico de la clase
 	  */
@@ -232,6 +232,12 @@ public:
 	  */
 	set<string> informacion_jugada(bintree<Pregunta>::node jugada_actual);
 
+
+
+	// funcin auxiliar para calcular la profundiad de cada rama
+	void calcular_profundidad_aux(bintree<Pregunta>::node nodo,
+                                             int profundidad, 
+                                             vector<int>& profundidades);
 	/**
 	  * @brief Este m�todo permite calcular la media de la profundidad de las hojas del �rbol.
 	  * Este valor representa el n�mero (promedio) de preguntas necesarias para adivinar cada personaje.
@@ -274,6 +280,8 @@ public:
      * @param personajes_activos: personajes que est�n activos
      */
     void ocultar_personajes_graph(const set<string> &personajes_activos);
+
+	string preguntas_formuladas(bintree<Pregunta>::node jugada);
 
 
 };
