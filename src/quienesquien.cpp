@@ -430,13 +430,16 @@ void QuienEsQuien::iniciar_juego(){
      }
 
      if (!jugada_actual.null()){
+          if(jugada_actual.left().null() && jugada_actual.right().null() && jugada_actual.operator*().es_personaje()) { 
           cout << "Tu personaje es: ";
           cout << jugada_actual.operator*().obtener_personaje();
           cout << "\n";
+          }else{
+               cout << "Error: Nodo final no es una hoja. Árbol mal construido o lógica incorrecta.\n";
+          }          
      }else{
           cout << "No he podido adivinar tu personaje. \n";
-     }          
-    
+     }
      if (modo_graph){
           auto aux = informacion_jugada(jugada_actual);
           ocultar_personajes_graph(aux);
