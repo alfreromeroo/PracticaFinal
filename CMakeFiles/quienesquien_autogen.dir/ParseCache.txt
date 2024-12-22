@@ -755,7 +755,6 @@
 /home/alvarodelcampo/2Informatica/ED/Practicas/PracticaFinal/submission/PracticaFinal/include/bintree.hxx
 /home/alvarodelcampo/2Informatica/ED/Practicas/PracticaFinal/submission/PracticaFinal/src/pregunta.cpp
 /home/alvarodelcampo/2Informatica/ED/Practicas/PracticaFinal/submission/PracticaFinal/include/bintree.h
-/home/alvarodelcampo/2Informatica/ED/Practicas/PracticaFinal/submission/PracticaFinal/include/node.hxx
 /home/alvarodelcampo/2Informatica/ED/Practicas/PracticaFinal/submission/PracticaFinal/include/ventana.h
  mmc:Q_OBJECT
  mdp:/home/alvarodelcampo/2Informatica/ED/Practicas/PracticaFinal/submission/PracticaFinal/include/consola.h
@@ -1154,3 +1153,4 @@
  mdp:/usr/lib/gcc/x86_64-linux-gnu/13/include/stddef.h
  mdp:/usr/lib/gcc/x86_64-linux-gnu/13/include/stdint.h
  mdp:/usr/lib/gcc/x86_64-linux-gnu/13/include/syslimits.h
+/home/alvarodelcampo/2Informatica/ED/Practicas/PracticaFinal/submission/PracticaFinal/include/node.hxx

@@ -438,7 +438,10 @@ void QuienEsQuien::iniciar_juego(){
      }          
     
      if (modo_graph){
-          con->WriteText("Cuando completes QuienEsQuien, este mensaje lo podr�s quitar");
+          auto aux = informacion_jugada(jugada_actual);
+          ocultar_personajes_graph(aux);
+          string A = " ";
+          con->WriteText(A);
           char c;
           
           do{
