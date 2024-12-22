@@ -399,29 +399,43 @@ void QuienEsQuien::iniciar_juego(){
      
      while (!jugada_actual.null() && (!jugada_actual.left().null() || !jugada_actual.right().null())){
 
-          con ->WriteText("¿Tu personaje tiene el atributo: ");
-          con ->WriteText(jugada_actual.operator*().obtener_pregunta());
-          con->WriteText("? (s/n): ");
+          cout << "¿Tu personaje tiene el atributo: ";
+          cout << jugada_actual.operator*().obtener_pregunta();
+          cout << "? (s/n): " << endl;
 
           char respuesta;
-          do{
-               respuesta = con ->ReadChar();
-          }while (respuesta != 's' && respuesta != 'n');
+          bool respuesta_valida = false;
 
+          while (!respuesta_valida) {
+               
+               cin >> respuesta;
+               
+               if (respuesta == 's' || respuesta == 'n') {
+                    
+                    respuesta_valida = true;  // Respuesta válida, salir del bucle
+               }else {
+
+                    cout << "Por favor, responde con 's' para sí o 'n' para no.\n" <<endl;
+               }
+          }     
+     
           if (respuesta == 's' && !jugada_actual.left().null()){
+                    
                jugada_actual = jugada_actual.left();
-          }else if (respuesta == 'n' && !jugada_actual.right().null()){
+
+          }else if( respuesta == 'n' && !jugada_actual.right().null()){
+
                jugada_actual = jugada_actual.right();
-          }
+          }                                   
      }
 
      if (!jugada_actual.null()){
-          con ->WriteText("Tu personaje es: ");
-          con ->WriteText(jugada_actual.operator*().obtener_personaje());
-          con ->WriteText("\n");
+          cout << "Tu personaje es: ";
+          cout << jugada_actual.operator*().obtener_personaje();
+          cout << "\n";
      }else{
-          con ->WriteText("No he podido adivinar tu personaje. \n");
-     }
+          cout << "No he podido adivinar tu personaje. \n";
+     }          
     
      if (modo_graph){
           con->WriteText("Cuando completes QuienEsQuien, este mensaje lo podr�s quitar");
@@ -434,8 +448,10 @@ void QuienEsQuien::iniciar_juego(){
           }while (c!='0');
           
      }
+
      v.cerrar();
 }	
+	
 
 set<string> QuienEsQuien::informacion_jugada(bintree<Pregunta>::node jugada_actual){
      set<string> personajes_levantados;
@@ -658,7 +674,7 @@ string QuienEsQuien::preguntas_formuladas(bintree<Pregunta>::node jugada) {
           if (nodo_padre.left() == nodo_actual){
                pregunta_formulada += "- " + nodo_padre.operator*().obtener_pregunta() + " - si\n";
           }else if (nodo_padre.right() == nodo_actual) {
-               pregunta_formulada += "- " + nodo_padre.operator*().obtener_pregunta() + " -no\n";
+               pregunta_formulada += "- " + nodo_padre.operator*().obtener_pregunta() + " - no\n";
           }
 
           nodo_actual = nodo_padre;
@@ -667,27 +683,6 @@ string QuienEsQuien::preguntas_formuladas(bintree<Pregunta>::node jugada) {
      pregunta_formulada += "pero aun no se cual es";
      return pregunta_formulada;
 }
-/*void QuienEsQuien::aniade_personaje (string nombre, vector <bool> caracteristicas, string nombre_imagen_personaje=""){
-     bintree<Pregunta>::node n = arbol.root();
-
-     if (n.null()){
-          arbol = bintree<Pregunta>(Pregunta(nombre, 1));
-          return;
-     }
-
-     if (n.left().null() && n.right().null() && n.operator*().es_personaje()){
-          string personaje_existe = n.operator*().obtener_personaje();
-
-          for (size_t i=0; i<atributos.size(); ++i){
-               int pos_personaje_existe = -1;
 
 
-          }
-
-          
-
-
-     }
-}
-*/
 
